@@ -104,7 +104,7 @@ Animator:
   m_GameObject: {fileID: 5008534755244437952}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dfdb4d2f80da0fd449348e31347bc646, type: 2}
+  m_Controller: {fileID: 22100000, guid: 46ed3b397a5b271489a8d40b65f942bb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a6b74844d7035d428cb7a2e8aa2aad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  maxHealth: 100
+  maxHealth: 60
   speed: 3
   damage: 10
   checkRadius: 50

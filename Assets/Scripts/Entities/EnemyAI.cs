@@ -16,7 +16,7 @@ public class EnemyAI : LivingEntity
         rb = GetComponent<Rigidbody2D>();
         
         // Find player slightly inefficiently but okay for small prototype
-        PlayerController player = FindObjectOfType<PlayerController>();
+        PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player != null)
         {
             playerTransform = player.transform;
@@ -63,5 +63,17 @@ public class EnemyAI : LivingEntity
                 // Optional: Knockback player or self?
             }
         }
+    }
+
+    protected override void Die()
+    {
+        Animator anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.SetTrigger("Death"); // Toto "zatáhne" za trigger v Animatoru
+        }
+
+        GetComponent<Collider2D>().enabled = false; // Vypne kolize, aby hráè mohl mrtvolou projít
+        Destroy(gameObject, 0.5f); // Smaže slajma po dohrání animace
     }
 }
