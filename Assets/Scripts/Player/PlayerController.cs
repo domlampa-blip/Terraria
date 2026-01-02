@@ -25,7 +25,7 @@ public class PlayerController : LivingEntity
     private bool isGrounded;
     private float moveInput;
 
-    // JEDNA METODA START - kombinuje všechnu inicializaci
+    // JEDNA METODA START - kombinuje vsechnu inicializaci
     protected override void Start()
     {
         base.Start();
@@ -93,10 +93,11 @@ public class PlayerController : LivingEntity
 
     void CheckGround()
     {
+        if (groundCheck == null) return;
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
-    // JEDNA METODA TAKEDAMAGE - kombinuje logiku blikání i odrazu
+    // JEDNA METODA TAKEDAMAGE - kombinuje logiku blikani i odrazu
     public override void TakeDamage(int damage)
     {
         if (isInvincible) return;
@@ -107,7 +108,7 @@ public class PlayerController : LivingEntity
         {
             if (anim != null) anim.SetTrigger("Hurt");
 
-            // Odraz od nepøítele
+            // Odraz od nepritele
             rb.AddForce(new Vector2(-transform.localScale.x * 3f, 3f), ForceMode2D.Impulse);
 
             StartCoroutine(HandleInvincibility());
@@ -149,23 +150,28 @@ public class PlayerController : LivingEntity
 
     protected override void Die()
     {
-        // Spustí základní logiku (animaci) z LivingEntity
+        // Spusti zakladni logiku (animaci) z LivingEntity
         base.Die();
 
-        // Zakáže skript pro pohyb a útok
+        // Zakaze skript pro pohyb a utok
         this.enabled = false;
         if (GetComponent<PlayerAttack>() != null)
             GetComponent<PlayerAttack>().enabled = false;
 
-        // Zastaví veškerý zbývající pohyb fyziky
+        // Zastavi veskery zbyvajici pohyb fyziky
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
-            rb.bodyType = RigidbodyType2D.Static; // Rytíø zùstane ležet na místì
+            rb.bodyType = RigidbodyType2D.Static; // Rytir zustane lezet na miste
         }
 
         Debug.Log("You are dead");
-        // Zde mùžeš v budoucnu vyvolat menu "Game Over"
+        
+        // Vyvolat Game Over
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.EndGame();
+        }
     }
 }

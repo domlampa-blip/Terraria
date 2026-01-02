@@ -67,13 +67,18 @@ public class EnemyAI : LivingEntity
 
     protected override void Die()
     {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.RegisterKill();
+        }
+
         Animator anim = GetComponent<Animator>();
         if (anim != null)
         {
-            anim.SetTrigger("Death"); // Toto "zatáhne" za trigger v Animatoru
+            anim.SetTrigger("Death"); // Toto "zatahne" za trigger v Animatoru
         }
 
-        GetComponent<Collider2D>().enabled = false; // Vypne kolize, aby hráè mohl mrtvolou projít
-        Destroy(gameObject, 0.5f); // Smaže slajma po dohrání animace
+        GetComponent<Collider2D>().enabled = false; // Vypne kolize, aby hrac mohl mrtvolou projet
+        Destroy(gameObject, 0.5f); // Smaze slajma po dohrani animace
     }
 }

@@ -18,6 +18,13 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance != null && GameManager.Instance.isGameOver) return;
+        
+        // Check spawn limit
+        if (GameManager.Instance != null && GameManager.Instance.activeEnemies >= GameManager.Instance.maxEnemies)
+        {
+            nextSpawnTime = Time.time + 1f; // Delay check slightly
+            return;
+        }
 
         if (Time.time >= nextSpawnTime)
         {
@@ -47,6 +54,11 @@ public class EnemySpawner : MonoBehaviour
             {
                 int randomIndex = Random.Range(0, enemyPrefabs.Length);
                 Instantiate(enemyPrefabs[randomIndex], spawnPos, Quaternion.identity);
+                
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.RegisterSpawn();
+                }
             }
         }
     }
